@@ -57,7 +57,8 @@ function register_post_relation( $from_type, $to_type, $args ) {
     ), $args);
 }
 
-add_action('init',  function() use ( $post_relations ) {
+add_action('init',  function() {
+    global $post_relations;
     $watched_types = array();
 
     // create one taxonomy per relation
@@ -114,7 +115,7 @@ add_action('init',  function() use ( $post_relations ) {
         }
 
     });
-});
+}, 999);
 
 // populate relations by triggering 'save_post' action
 function post_relations_populate( $post_types, $display_notice = true ) {
