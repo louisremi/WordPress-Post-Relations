@@ -168,7 +168,7 @@ add_filter('wp_terms_checklist_args', function( $args ) {
                         $name = 'tax_input['.$taxonomy.']';
 
                     $class = in_array( $category->term_id, $popular_cats ) ? ' class="popular-category"' : '';
-                    $output .= "\n<li id='{$taxonomy}-{$category->term_id}'$class>" . '<label class="selectit"><input value="' . $category->term_id . '" type="radio" name="'.$name.'[]" id="in-'.$taxonomy.'-' . $category->term_id . '"' . checked( in_array( $category->term_id, $selected_cats ), true, false ) . disabled( empty( $args['disabled'] ), false, false ) . ' /> ' . esc_html( apply_filters('the_category', $category->name )) . '</label>';
+                    $output .= "\n<li id='{$taxonomy}-{$category->term_id}'$class>" . '<label class="selectit"><input value="' . $category->term_id . '" type="radio" data-type="checkbox" name="'.$name.'[]" id="in-'.$taxonomy.'-' . $category->term_id . '"' . checked( in_array( $category->term_id, $selected_cats ), true, false ) . disabled( empty( $args['disabled'] ), false, false ) . ' /> ' . esc_html( apply_filters('the_category', $category->name )) . '</label>';
                 }
             }
         }
@@ -178,5 +178,16 @@ add_filter('wp_terms_checklist_args', function( $args ) {
 
     return $args;
 });
+
+// make the inline-edit compatible with our radio-buttons
+add_action('admin_print_footer_scripts', function() {
+?><script>
+jQuery.expr[':'].checkbox = function( elem ) {
+    var name = elem.nodeName.toLowerCase(),
+        type = elem.type;
+    return name === "input" && ( type === "checkbox" || ( type === "radio" && elem.getAttribute("data-type") === "checkbox" ) );
+};
+</script><?php
+}, 99);
 
 ?>
