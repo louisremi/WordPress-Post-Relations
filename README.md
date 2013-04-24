@@ -2,7 +2,7 @@ WordPress Post Relations
 ========================
 
 This library allows to create relations between post types in WordPress. It uses native WordPress features (taxonomies) and UI, so the code is very short (~200 well-spaced LOC), easy to understand and extend.  
-Bonus feature: relations can be "1 to 1" and that behavior can be applied to any hierarchical taxonomy.
+Bonus feature: Display radio-buttons in any taxonomy and create 1 to 1 relations.
 
 Short example
 -------------
@@ -29,7 +29,7 @@ add_action( 'init', function() {
 
 	// Register the relation
 	register_post_relation( $from_type, $to_type, array(
-		'1_to_1' => true
+		'radio' => true
 	));
 
 	// That's it for the main function and option.

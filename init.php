@@ -52,8 +52,7 @@ function register_post_relation( $from_type, $to_type, $args ) {
         ),
         'hierarchical' => true,
         'show_in_nav_menus' => false,
-        'show_tagcloud' => false,
-        'single_choice' => array_key_exists( '1_to_1', $args ) ? $args['1_to_1'] : false
+        'show_tagcloud' => false
     ), $args);
 }
 
@@ -147,16 +146,16 @@ function post_relations_populate( $post_types, $display_notice = true ) {
     }
 }
 
-// taxonomies with arg 'single_choice' will have radio-buttons in their meta-boxes
+// taxonomies with arg 'radio' will have radio-buttons in their meta-boxes
 add_filter('wp_terms_checklist_args', function( $args ) {
     $taxonomy = get_taxonomy( $args['taxonomy'] );
 
-    if ( property_exists( $taxonomy, 'single_choice' ) && $taxonomy->single_choice ) {
+    if ( property_exists( $taxonomy, 'radio' ) && $taxonomy->radio ) {
 
         // Create the walker before first use
-        if ( !class_exists( 'Walker_Single_Category_Checklist' ) ) {
+        if ( !class_exists( 'Walker_Radio_Category_Checklist' ) ) {
             // copy the Walker_Category_Checklist, just change the option type
-            class Walker_Single_Category_Checklist extends Walker_Category_Checklist {
+            class Walker_Radio_Category_Checklist extends Walker_Category_Checklist {
                 function start_el( &$output, $category, $depth, $args, $id = 0 ) {
                     extract($args);
                     if ( empty($taxonomy) )
@@ -173,13 +172,13 @@ add_filter('wp_terms_checklist_args', function( $args ) {
             }
         }
 
-        $args['walker'] = new Walker_Single_Category_Checklist;
+        $args['walker'] = new Walker_Radio_Category_Checklist;
     }
 
     return $args;
 });
 
-// make the inline-edit compatible with our radio-buttons
+// Hack into jQuery's selector engine to make inline-edit compatible with radio-buttons
 add_action('admin_print_footer_scripts', function() {
 ?><script>
 jQuery.expr[':'].checkbox = function( elem ) {
