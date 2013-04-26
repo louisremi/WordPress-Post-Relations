@@ -51,26 +51,20 @@ When using WPML, translations should be enabled for each relation individually: 
 Documentation
 -------------
 
-**register_post_relation( $from_type, $to_type, $relation_name, $args )**
-
-uses [register_taxonomy](http://codex.wordpress.org/Function_Reference/register_taxonomy)
+**register_post_relation( $from_type, $to_type, $relation_name, $args )** ***uses [register_taxonomy](http://codex.wordpress.org/Function_Reference/register_taxonomy)***
 
 - `$from_type` : (***string***) The name of the post type that will display the relation meta-box
 - `$to_type` : (***string***) The name of the related post type
 - `$relation_name` : (***string***) The name of the relation (will be used as the taxonomy name)
 - `$args` : can be used to pass additional options to `register_taxonomy`. Setting `'radio'` to `true` will display radio buttons for this taxonomy.
 
-**get_related_posts( $post_ID, $relation_name, $args )**
-
-uses [get_posts](http://codex.wordpress.org/Function_Reference/get_posts)
+**get_related_posts( $post_ID, $relation_name, $args )** ***uses [get_posts](http://codex.wordpress.org/Function_Reference/get_posts)***
 
 - `$post_id` : (***int***) The ID of a post
 - `$relation_name` : (***string***) The name of the relation
 - `$args` : can be used to pass additional options to `get_posts` (specifying the `'post_type'` that should be returned will save one DB query)
 
-**query_related_posts( $post_ID, $relation_name, $args )**
-
-uses [query_posts](http://codex.wordpress.org/Function_Reference/query_posts)
+**query_related_posts( $post_ID, $relation_name, $args )** ***uses [query_posts](http://codex.wordpress.org/Function_Reference/query_posts)***
 
 - `$post_id` : (***int***) The ID of a post
 - `$relation_name` : (***string***) The name of the relation
