@@ -2,7 +2,7 @@ WordPress Post Relations
 ========================
 
 This library allows to create relations between post types in WordPress. It uses native WordPress features (taxonomies) and UI, so the code is very short (~200 well-spaced LOC), easy to understand and extend.  
-Bonus feature: Display radio-buttons in any taxonomy and create 1 to 1 relations.
+Bonus feature: Display radio-buttons in any taxonomy ( 1 to 1 relations! ).
 
 Short example
 -------------
@@ -16,6 +16,7 @@ include 'WordPress-Post-Relations/init.php';
 add_action( 'init', function() {
 	$from_type = 'wines';
 	$to_type = 'castles';
+	$relation_name = 'wines-to-castles';
 
 	// Register custom post types as usual
 	// The only prerequisite is that the "from type" should support page-attributes
@@ -28,7 +29,7 @@ add_action( 'init', function() {
 	register_post_type( $to_type );
 
 	// Register the relation
-	register_post_relation( $from_type, $to_type, array(
+	register_post_relation( $from_type, $to_type, $relation_name, array(
 		'radio' => true
 	));
 
@@ -46,6 +47,34 @@ Installation & Usage
 This plugin has been tested with WordPress 3.5
 
 When using WPML, translations should be enabled for each relation individually: navigate to "WPML > translation options" and enable translations in the "Custom taxonomies" box.
+
+Documentation
+-------------
+
+**register_post_relation( $from_type, $to_type, $relation_name, $args )**
+
+uses [register_taxonomy](http://codex.wordpress.org/Function_Reference/register_taxonomy)
+
+- `$from_type` : (***string***) The name of the post type that will display the relation meta-box
+- `$to_type` : (***string***) The name of the related post type
+- `$relation_name` : (***string***) The name of the relation (will be used as the taxonomy name)
+- `$args` : can be used to pass additional options to `register_taxonomy`. Setting `'radio'` to `true` will display radio buttons for this taxonomy.
+
+**get_related_posts( $post_ID, $relation_name, $args )**
+
+uses [get_posts](http://codex.wordpress.org/Function_Reference/get_posts)
+
+- `$post_id` : (***int***) The ID of a post
+- `$relation_name` : (***string***) The name of the relation
+- `$args` : can be used to pass additional options to `get_posts` (specifying the `'post_type'` that should be returned will save one DB query)
+
+**query_related_posts( $post_ID, $relation_name, $args )**
+
+uses [query_posts](http://codex.wordpress.org/Function_Reference/query_posts)
+
+- `$post_id` : (***int***) The ID of a post
+- `$relation_name` : (***string***) The name of the relation
+- `$args` : can be used to pass additional options to `query_posts` (specifying the `'post_type'` that should be returned will save one DB query)
 
 Credits & License
 -----------------
