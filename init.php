@@ -30,7 +30,7 @@ send me music: http://www.amazon.co.uk/wishlist/HNTU0468LQON
  */
 
 global $post_relations;
-$post_relations = $array();
+$post_relations = array();
 
 function register_post_relation( $from_type, $to_type, $taxonomy_name, $args = array() ) {
     global $post_relations;
