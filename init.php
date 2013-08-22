@@ -163,7 +163,7 @@ add_filter('wp_terms_checklist_args', function( $args ) {
         if ( !class_exists( 'Walker_Radio_Category_Checklist' ) ) {
             // copy the Walker_Category_Checklist, just change the option type
             class Walker_Radio_Category_Checklist extends Walker_Category_Checklist {
-                function start_el( &$output, $category, $depth, $args, $id = 0 ) {
+                function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
                     extract($args);
                     if ( empty($taxonomy) )
                         $taxonomy = 'category';
